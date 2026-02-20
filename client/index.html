@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DocuMind AI</title>
+</head>
+
+<body>
+  <style>
+    #initial-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #030712;
+      /* gray-950 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-family: system-ui, sans-serif;
+      z-index: 9999;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #1f2937;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 24px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .funny-text {
+      font-size: 1.1rem;
+      max-width: 400px;
+      line-height: 1.5;
+    }
+
+    .bold-white {
+      color: #f3f4f6;
+      font-weight: 600;
+    }
+  </style>
+  <div id="initial-loader">
+    <div class="spinner"></div>
+    <div class="funny-text">
+      <span class="bold-white">Render took time sleeping 😴</span><br /><br />
+      Since developer is poor, we built this on free bucks so server is waking up from a cold start.<br /><br />
+      Hang tight, magic is loading... ✨
+    </div>
+  </div>
+  <div id="root"></div>
+  <script type="module">
+    // Remove loader once React mounts and fires an event, or just let React overwrite the root 
+    // (React won't overwrite siblings of #root, so we remove it manually on load)
+    window.addEventListener('load', () => {
+      // Small timeout to ensure React has painted
+      setTimeout(() => {
+        const loader = document.getElementById('initial-loader');
+        if (loader) loader.style.display = 'none';
+      }, 1500);
+    });
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
