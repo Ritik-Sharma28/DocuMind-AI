@@ -11,6 +11,7 @@ RUN npm run build
 FROM node:22-alpine
 
 WORKDIR /app
+ENV NODE_ENV=production
 
 # Copy the backend code
 COPY server ./server

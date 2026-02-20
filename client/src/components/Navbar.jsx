@@ -16,7 +16,7 @@ export default function Navbar() {
         <nav className="bg-gray-900 border-b border-gray-800">
             <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
                 <div className="flex items-center gap-2">
-                    <span className="text-2xl">🧠</span>
+                    <img src="/logo.png" alt="DocuMind Logo" className="w-8 h-8 object-contain rounded-md" />
                     <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                         DocuMind AI
                     </span>
@@ -28,8 +28,8 @@ export default function Navbar() {
                             key={l.to}
                             to={l.to}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition ${pathname === l.to
-                                    ? "bg-blue-600 text-white"
-                                    : "text-gray-400 hover:text-white hover:bg-gray-800"
+                                ? "bg-blue-600 text-white"
+                                : "text-gray-400 hover:text-white hover:bg-gray-800"
                                 }`}
                         >
                             {l.icon} <span>{l.label}</span>
