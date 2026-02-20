@@ -53,9 +53,9 @@ export default function Upload() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8 relative">
+        <div className="max-w-2xl mx-auto px-4 py-8 sm:relative">
             {limits && (
-                <div className="absolute top-0 right-4 bg-gray-900 border border-gray-800 p-3 rounded-xl shadow-lg">
+                <div className="mb-4 sm:mb-0 sm:absolute sm:top-0 sm:right-4 bg-gray-900 border border-gray-800 p-3 rounded-xl shadow-lg">
                     <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Upload Limits</p>
                     <div className="flex gap-2 items-center">
                         <span className={`font-bold ${limits.document.remaining === 0 ? "text-red-400" : "text-green-400"}`}>
@@ -69,7 +69,7 @@ export default function Upload() {
             <h1 className="text-3xl font-bold mb-2 pt-4">Upload Document</h1>
             <p className="text-gray-400 mb-8">PDF, DOCX, TXT, or MD — up to 10 MB</p>
 
-            <div {...getRootProps()} className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition ${isDragActive ? "border-blue-500 bg-blue-500/10" : "border-gray-700 hover:border-gray-600 bg-gray-900"}`}>
+            <div {...getRootProps()} className={`border-2 border-dashed rounded-xl p-8 sm:p-12 text-center cursor-pointer transition ${isDragActive ? "border-blue-500 bg-blue-500/10" : "border-gray-700 hover:border-gray-600 bg-gray-900"}`}>
                 <input {...getInputProps()} />
                 <FiUploadCloud className="mx-auto text-4xl text-gray-400 mb-4" />
                 <p className="text-gray-300">{isDragActive ? "Drop here…" : "Drag & drop or click to select"}</p>

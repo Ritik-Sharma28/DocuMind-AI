@@ -42,7 +42,7 @@ export default function Dashboard() {
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-1">Welcome back, {user?.name} 👋</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-1">Welcome back, {user?.name} 👋</h1>
             <p className="text-gray-400 mb-8">Manage your documents and ask questions</p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -57,7 +57,7 @@ export default function Dashboard() {
                 ))}
             </div>
 
-            <div className="flex gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
                 <Link to="/upload" className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg">
                     <FiUpload /> Upload Document
                 </Link>

@@ -4,7 +4,7 @@ import api from "../api/axios";
 import ChatMessage from "../components/ChatMessage";
 import SourceCard from "../components/SourceCard";
 import ReactMarkdown from "react-markdown";
-import { FiSend, FiMessageSquare, FiTrash2 } from "react-icons/fi";
+import { FiSend, FiMessageSquare, FiTrash2, FiMenu, FiX } from "react-icons/fi";
 import toast from "react-hot-toast";
 
 export default function Chat() {
@@ -19,6 +19,7 @@ export default function Chat() {
     const [docs, setDocs] = useState([]);
     const [selectedDocs, setSelectedDocs] = useState([]);
     const [limits, setLimits] = useState(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const bottomRef = useRef(null);
     const inputRef = useRef(null);
 
@@ -142,11 +143,31 @@ export default function Chat() {
     };
 
     return (
-        <div className="flex h-[calc(100vh-64px)]">
+        <div className="flex h-[calc(100vh-64px)] relative">
+            {/* ── Mobile sidebar toggle button ── */}
+            <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="md:hidden fixed top-[72px] left-3 z-50 bg-gray-800 border border-gray-700 text-gray-300 hover:text-white p-2 rounded-lg shadow-lg"
+            >
+                {sidebarOpen ? <FiX size={18} /> : <FiMenu size={18} />}
+            </button>
+
+            {/* ── Mobile backdrop ── */}
+            {sidebarOpen && (
+                <div
+                    className="md:hidden fixed inset-0 bg-black/50 z-30"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
+
             {/* ── Sidebar ── */}
-            <div className="w-72 bg-gray-900 border-r border-gray-800 flex flex-col">
+            <div className={`
+                fixed md:relative z-40 top-0 left-0 h-full w-72 bg-gray-900 border-r border-gray-800 flex flex-col
+                transition-transform duration-200 ease-in-out
+                ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+            `}>
                 <div className="p-4">
-                    <button onClick={newChat} className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium flex items-center justify-center gap-2">
+                    <button onClick={() => { newChat(); setSidebarOpen(false); }} className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium flex items-center justify-center gap-2">
                         <FiMessageSquare /> New Chat
                     </button>
                 </div>
@@ -185,7 +206,7 @@ export default function Chat() {
                 <div className="flex-1 overflow-y-auto px-2 pb-4">
                     <p className="text-xs text-gray-500 uppercase px-2 mb-2">History</p>
                     {convos.map((c) => (
-                        <div key={c._id} onClick={() => setActiveId(c._id)}
+                        <div key={c._id} onClick={() => { setActiveId(c._id); setSidebarOpen(false); }}
                             className={`group flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer mb-1 ${activeId === c._id ? "bg-gray-800 text-white" : "text-gray-400 hover:bg-gray-800/50"}`}>
                             <span className="text-sm truncate flex-1">{c.title}</span>
                             <button onClick={(e) => { e.stopPropagation(); deleteConvo(c._id); }}
@@ -198,13 +219,13 @@ export default function Chat() {
             </div>
 
             {/* ── Chat ── */}
-            <div className="flex-1 flex flex-col">
-                <div className="flex-1 overflow-y-auto px-4 py-6">
+            <div className="flex-1 flex flex-col min-w-0">
+                <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-6">
                     {messages.length === 0 && !streaming ? (
-                        <div className="flex flex-col items-center justify-center h-full text-gray-500">
-                            <span className="text-6xl mb-4">🧠</span>
-                            <h2 className="text-2xl font-bold text-gray-300 mb-2">DocuMind AI</h2>
-                            <p className="text-center max-w-md">
+                        <div className="flex flex-col items-center justify-center h-full text-gray-500 px-4">
+                            <span className="text-5xl sm:text-6xl mb-4">🧠</span>
+                            <h2 className="text-xl sm:text-2xl font-bold text-gray-300 mb-2 text-center">DocuMind AI</h2>
+                            <p className="text-center max-w-md text-sm sm:text-base">
                                 Ask questions about your uploaded documents. I'll find relevant
                                 information and provide answers with source citations.
                             </p>
@@ -216,7 +237,7 @@ export default function Chat() {
                             {streaming && (
                                 <div className="flex gap-3">
                                     <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shrink-0">🧠</div>
-                                    <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 flex-1">
+                                    <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 flex-1 min-w-0">
                                         <div className="prose prose-invert max-w-none">
                                             <ReactMarkdown>{streaming}</ReactMarkdown>
                                         </div>
@@ -239,14 +260,14 @@ export default function Chat() {
                 </div>
 
                 {/* Input */}
-                <div className="border-t border-gray-800 px-4 py-4">
-                    <div className="max-w-3xl mx-auto flex gap-3">
+                <div className="border-t border-gray-800 px-3 sm:px-4 py-3 sm:py-4">
+                    <div className="max-w-3xl mx-auto flex gap-2 sm:gap-3">
                         <input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
                             placeholder="Ask about your documents…" disabled={loading}
-                            className="flex-1 px-4 py-3 bg-gray-900 border border-gray-700 rounded-xl focus:outline-none focus:border-blue-500 placeholder-gray-500" />
+                            className="flex-1 px-3 sm:px-4 py-3 bg-gray-900 border border-gray-700 rounded-xl focus:outline-none focus:border-blue-500 placeholder-gray-500 text-sm sm:text-base min-w-0" />
                         <button onClick={send} disabled={loading || !input.trim()}
-                            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl disabled:opacity-50">
+                            className="px-4 sm:px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl disabled:opacity-50 shrink-0">
                             <FiSend />
                         </button>
                     </div>

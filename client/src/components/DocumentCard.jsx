@@ -17,7 +17,7 @@ export default function DocumentCard({ document: doc, onDelete }) {
                 <div className="flex items-center gap-3">
                     <div className="p-2 bg-blue-500/20 rounded-lg"><FiFileText className="text-blue-400" /></div>
                     <div>
-                        <h3 className="font-medium truncate max-w-[200px]">{doc.title}</h3>
+                        <h3 className="font-medium truncate max-w-[140px] sm:max-w-[200px]">{doc.title}</h3>
                         <p className="text-xs text-gray-500">{doc.fileName}</p>
                     </div>
                 </div>
