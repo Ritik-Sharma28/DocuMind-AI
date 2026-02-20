@@ -2,8 +2,6 @@
 
 DocuMind AI is a full-stack, AI-powered document analysis and chat application. It allows users to securely upload PDF documents and engage in intelligent, context-aware conversations with their documents. Utilizing advanced Retrieval-Augmented Generation (RAG), DocuMind AI reads your files, generates semantic embeddings, and provides accurate answers based strictly on the uploaded content.
 
-![DocuMind AI Banner](https://via.placeholder.com/800x200.png?text=DocuMind+AI+-+Chat+with+your+Documents) <!-- Placeholder for a real screenshot/banner -->
-
 ## ✨ Key Features
 
 - **🔐 Secure Authentication**: Robust user registration and login system utilizing JSON Web Tokens (JWT) and `bcrypt` password hashing.
