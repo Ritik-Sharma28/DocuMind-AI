@@ -1,4 +1,4 @@
-import {redisClient} from "../config/redisClient.js";
+import { redisClient } from "../config/redisClient.js";
 
 const getSecondsToMidnight = () => {
     const now = new Date();
@@ -62,7 +62,7 @@ export const createLimiter = (prefix, limit) => {
 };
 
 export const chatLimitMiddleware = createLimiter("chat_limit", 6);
-export const documentLimitMiddleware = createLimiter("doc_limit", 5);
+export const documentLimitMiddleware = createLimiter("doc_limit", 3);
 
 // Endpoint to fetch current limits
 export const getLimits = async (req, res) => {
@@ -84,7 +84,7 @@ export const getLimits = async (req, res) => {
 
         res.json({
             chat: { limit: 6, used: cCount, remaining: Math.max(0, 6 - cCount) },
-            document: { limit: 5, used: dCount, remaining: Math.max(0, 5 - dCount) },
+            document: { limit: 3, used: dCount, remaining: Math.max(0, 3 - dCount) },
             resetInSeconds: getSecondsToMidnight()
         });
     } catch (err) {

@@ -15,6 +15,11 @@ async function processDocument(doc, buffer, userId) {
         chunkSize: 1000,
         chunkOverlap: 200,
     }).splitText(text);
+
+    if (!chunks || chunks.length === 0) {
+        throw new Error("No readable text found. Only valid text-based PDFs will be processed.");
+    }
+
     doc.totalChunks = chunks.length;
 
     await EmbeddingService.embedAndStore(chunks, doc._id, userId, doc.title);
